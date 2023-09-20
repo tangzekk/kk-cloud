@@ -1,0 +1,101 @@
+# Copyright VMware, Inc.
+# SPDX-License-Identifier: APACHE-2.0
+
+version: '2.1'
+
+services:
+  mysql57:
+    image: docker.io/bitnami/mysql:5.7
+    ports:
+      - '3306:3306'
+    volumes:
+      - './mysql/mysql_data:/bitnami/mysql/data'
+
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      #- ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=123456
+      #      - MYSQL_MASTER_HOST=0.0.0.0
+      - MYSQL_DATABASE=ruoyi-vue-pro
+
+
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+  redis:
+    image: docker.io/bitnami/redis:7.2
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+    #  - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - './redis/redis_data:/bitnami/redis/data'
+
+  nacos:
+    image: nacos/nacos-server:v2.1.0
+    container_name: nacos
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
+    privileged: true
+    volumes:
+      - ./nacos/logs/nacos/:/home/nacos/logs
+      - ./nacos/data/nacos/:/home/nacos/data
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      ##rocketMQ
+  namesrv:
+    image: apache/rocketmq:4.5.0
+    container_name: rmqnamesrv
+    ports:
+      - 9876:9876
+    volumes:
+      - ./rocketmq/data/namesrv/logs:/home/rocketmq/logs
+    command: sh mqnamesrv
+  broker:
+    image: apache/rocketmq:4.5.0
+    container_name: rmqbroker
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    volumes:
+      - ./rocketmq/data/broker/logs:/home/rocketmq/logs
+      - ./rocketmq/data/broker/store:/home/rocketmq/store
+      - ./rocketmq/data/broker/conf/broker.conf:/home/rocketmq/rocketmq-4.5.0/conf/broker.conf
+    command: sh mqbroker -n namesrv:9876 -c ../conf/broker.conf
+    depends_on:
+      - namesrv
+      ##rocketMQ
+
+
+  xxljob:
+    image: docker.io/xuxueli/xxl-job-admin:2.2.0
+    container_name: xxljob
+    privileged: true
+    volumes:
+      - ./xxljob/logs/xxljob:/data/applogs
+    ports:
+      - "8081:8080"
+    environment:
+      TZ: Asia/Shanghai
+      # ??: spring.datasource.password????????root??
+      PARAMS: '--spring.datasource.url=jdbc:mysql://vm.centos7:3306/xxl_job?Unicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+               --spring.datasource.username=root
+               --spring.datasource.password=123456
+               --xxl.job.login.username=admin
+               --xxl.job.login.password=123456'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+volumes:
+  mysql_data:
+  redis_data:
