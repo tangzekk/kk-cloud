@@ -1,12 +1,14 @@
-
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 123456
-    url: jdbc:mysql://192.168.210.142:3306/user-service?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true
-##  sql:
-##    init:
-##      schema-locations: classpath:db/schema-h2.sql
-##      data-locations: classpath:db/data-h2.sql
-#      url: jdbc:mysql://192.168.210.142:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X ?????
+#
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 123456
+#    url: jdbc:mysql://192.168.210.142:3306/user-service?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true
+###  sql:
+###    init:
+###      schema-locations: classpath:db/schema-h2.sql
+###      data-locations: classpath:db/data-h2.sql
+##      url: jdbc:mysql://192.168.210.142:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X ?????
+#server:
+#  port: 8333

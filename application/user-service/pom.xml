@@ -59,7 +59,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.3.2</version>
         </dependency>
+        <dependency>
 
+        <groupId>top.zekk</groupId>
+        <artifactId>common-feign-params</artifactId>
+        <version>0.0.1</version>
+    </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

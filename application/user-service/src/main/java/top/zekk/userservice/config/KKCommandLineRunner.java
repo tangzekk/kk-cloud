@@ -14,8 +14,8 @@ public class KKCommandLineRunner implements CommandLineRunner {
     UserMapper userMapper;
     @Override
     public void run(String... args) throws Exception {
-        User onlyKkRunnerTest = User.builder().username("only KKCommandLineRunner test").registerDate(new Date()).password("123456").flag(0).email("1234@qq.cc").build();
-
-        userMapper.insert(onlyKkRunnerTest);
+//        User onlyKkRunnerTest = User.builder().username("only KKCommandLineRunner test").registerDate(new Date()).password("123456").flag(0).email("1234@qq.cc").build();
+//
+//        userMapper.insert(onlyKkRunnerTest);
     }
 }

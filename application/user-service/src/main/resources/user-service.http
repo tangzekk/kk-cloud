@@ -1,0 +1,10 @@
+POST http://localhost:8333/user/save
+Content-Type: application/json
+
+{
+  "username": "西藏",
+  "password": "password_bfa1e41693cc",
+  "email": "37904f1ea007@qq.cc",
+
+  "flag": 0
+}
