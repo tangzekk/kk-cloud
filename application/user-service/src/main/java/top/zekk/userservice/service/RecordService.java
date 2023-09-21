@@ -11,7 +11,7 @@ import top.zekk.commonfeignparams.param.RecordVO;
  * v0.1 有点问题,同样的参数类每个服务都得自己建一个,一个服务改了,每个服务都要改
  */
 @FeignClient(
-        name = "record-service",contextId = "record-service"
+        name = "record-service",path = "/record"
 //        ,url = "http://localhost:8222/record/" //开始测试的时候给的ip 使用nacos后使用服务名调用
 //        ,configuration = FeignInterceptor.class,
 //        fallback = TestService.DefaultFallback.class
